@@ -1,6 +1,6 @@
 ﻿namespace BoraEncontros.Events;
 
-public class Event
+public class Account : Entity
 {
     public required int Id { get; set; }
     public required string Username { get; set; }

@@ -5,10 +5,10 @@
 /// É responsável por garantir as invariantes do domínio.
 /// Cor no EventStorming: <b>Roxo</b>.
 /// </summary>
-public abstract class AggregateRoot : IAuditable
+public abstract class AggregateRoot : Entity, IAuditable
 {
-    public DateTime CreatedAt { get; }
-    public DateTime UpdatedAt { get; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime UpdatedAt { get; private set; }
     private List<IDomainEvent> _domainEvents = [];
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
     public void AddDomainEvent(IDomainEvent domainEvent)
