@@ -1,5 +1,4 @@
 ﻿using BoraEncontros.Accounts.Repositories;
-using BoraEncontros.GoogleCalendar;
 using BoraEncontros.Infraestructure.DataStores;
 using BoraEncontros.Infrastructure;
 using Google.Apis.Util.Store;
@@ -14,12 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext();
             services.AddRepositories();
         }
-
-        public static IServiceCollection AddGoogleCalendarService(this IServiceCollection serviceCollection)
+        public static void AddCalendarTokenDataStore(this IServiceCollection services)
         {
-            serviceCollection.AddScoped<IDataStore, GoogleDataStore>();
-            serviceCollection.AddScoped<ICalendarService, GoogleCalendarService>();
-            return serviceCollection;
+            services.AddScoped<IDataStore, CalendarTokenDataStore>();
         }
         private static void AddRepositories(this IServiceCollection services)
         {

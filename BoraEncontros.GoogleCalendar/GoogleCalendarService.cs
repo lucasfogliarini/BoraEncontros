@@ -6,10 +6,11 @@ using Microsoft.Extensions.Options;
 
 namespace BoraEncontros.GoogleCalendar;
 
-public class GoogleCalendarService(IDataStore dataStore, IOptions<GoogleCalendarSettings> settings) : ICalendarService
+internal class GoogleCalendarService(IDataStore dataStore, IOptions<GoogleCalendarSettings> settings) : ICalendarService
 {
-    public async Task<IEnumerable<EventResponse>> GetEventsAsync(string user, EventRequestFilter eventRequestFilter)
+    public async Task<IEnumerable<EventResponse>> GetEventsAsync(string user, EventRequestFilter eventRequestFilter = null)
     {
+        eventRequestFilter ??= new EventRequestFilter();
         var calendarService = await InitializeCalendarServiceAsync(user);
         var request = calendarService.Events.List(eventRequestFilter.CalendarId);
         request.TimeMinDateTimeOffset = eventRequestFilter.TimeMin ?? DateTime.Now;

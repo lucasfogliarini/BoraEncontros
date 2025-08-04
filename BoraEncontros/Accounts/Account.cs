@@ -1,8 +1,7 @@
-﻿namespace BoraEncontros.Events;
+﻿namespace BoraEncontros.Accounts;
 
 public class Account : Entity
 {
-    public required int Id { get; set; }
     public required string Username { get; set; }
     public required string Email { get; set; }
     public string? Name { get; set; }

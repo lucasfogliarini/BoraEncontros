@@ -1,4 +1,4 @@
-﻿using BoraEncontros.Events;
+﻿using BoraEncontros.Accounts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
