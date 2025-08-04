@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
         private static void AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<ICalendarTokenRepository, CalendarTokenRepository>();
+            services.AddTransient<ICalendarTokenRepository, CalendarTokenRepository>();
         }
 
         private static void AddDbContext(this IServiceCollection services)

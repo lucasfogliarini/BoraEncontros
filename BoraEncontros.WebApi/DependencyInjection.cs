@@ -6,7 +6,6 @@ using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using System;
 using System.Security.Claims;
 
 namespace Microsoft.Extensions.DependencyInjection;

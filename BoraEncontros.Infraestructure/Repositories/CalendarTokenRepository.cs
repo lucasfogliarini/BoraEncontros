@@ -11,4 +11,9 @@ internal class CalendarTokenRepository(BoraEncontrosDbContext dbContext) : Repos
         var calendarToken = await dbContext.Set<CalendarToken>().Include(e=>e.Account).FirstOrDefaultAsync(x => x.Account.Email == email);
         return calendarToken;
     }
+    public async Task<CalendarToken?> GetByUsernameAsync(string username)
+    {
+        var calendarToken = await dbContext.Set<CalendarToken>().Include(e => e.Account).FirstOrDefaultAsync(x => x.Account.Username == username);
+        return calendarToken;
+    }
 }
