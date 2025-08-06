@@ -8,7 +8,6 @@ services:
     container_name: BoraEncontros.WebApi
     ports:
       - "1000:1000"  # HTTP
-      - "1001:1001"  # HTTPS
     environment:
       DOTNET_ENVIRONMENT: Development
-      ASPNETCORE_URLS: "http://+:1000;https://+:1001"
+      ASPNETCORE_URLS: "http://+:1000"

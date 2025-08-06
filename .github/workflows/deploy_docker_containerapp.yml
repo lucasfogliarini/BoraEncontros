@@ -33,13 +33,3 @@ jobs:
         registryUrl: docker.io
         registryUsername: lucasfogliarini
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
-        secrets: |
-          BORAENCONTROS_CONNECTION_STRING=${{ secrets.BORAENCONTROS_CONNECTION_STRING }}
-          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
-        env: |
-          ConnectionStrings__BoraEncontros=${{ secrets.BORAENCONTROS_CONNECTION_STRING }}
-          GoogleCalendar__ClientId=${{ secrets.GOOGLE_CLIENT_ID }}
-          GoogleCalendar__ClientSecret=${{ secrets.GOOGLE_CLIENT_SECRET }}
-          GoogleCalendar__ApplicationName=BoraEncontros
-          GoogleCalendar__TokenFolder=token.json

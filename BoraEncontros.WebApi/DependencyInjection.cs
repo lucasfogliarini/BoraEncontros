@@ -1,12 +1,16 @@
 ﻿using BoraEncontros.GoogleCalendar;
+using BoraEncontros.Infrastructure;
 using BoraEncontros.WebApi;
 using Google.Apis.Auth.AspNetCore3;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -29,6 +33,7 @@ public static class DependencyInjection
         app.UseOutputCache();//precisa ser antes do MapEndpoints
         app.MapControllers();
         //app.MapEndpoints();
+        app.MapVersionEndpoint();
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
@@ -61,6 +66,12 @@ public static class DependencyInjection
         }
 
         return app;
+    }
+    private static void MapVersionEndpoint(this WebApplication app)
+    {
+        var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
+        app.MapGet("/version", () => Results.Text(version));
+
     }
 
     public static void AddGoogleCalendar(this WebApplicationBuilder builder)
