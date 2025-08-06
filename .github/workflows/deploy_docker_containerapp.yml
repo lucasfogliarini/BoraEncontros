@@ -38,8 +38,8 @@ jobs:
           GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
         env: |
-          ConnectionStrings__BoraEncontros=secretref:BORAENCONTROS_CONNECTION_STRING
-          GoogleCalendar__ClientId=secretref:GOOGLE_CLIENT_ID
-          GoogleCalendar__ClientSecret=secretref:GOOGLE_CLIENT_SECRET
+          ConnectionStrings__BoraEncontros=${{ secrets.BORAENCONTROS_CONNECTION_STRING }}
+          GoogleCalendar__ClientId=${{ secrets.GOOGLE_CLIENT_ID }}
+          GoogleCalendar__ClientSecret=${{ secrets.GOOGLE_CLIENT_SECRET }}
           GoogleCalendar__ApplicationName=BoraEncontros
           GoogleCalendar__TokenFolder=token.json
