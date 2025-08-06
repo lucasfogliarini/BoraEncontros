@@ -15,17 +15,20 @@ public static class DependencyInjection
     public static void AddWebApi(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
-        builder.Services.AddEndpoints();
+        //builder.Services.AddEndpoints();
         builder.Services.AddProblemDetails();
-        //builder.AddOutputCache();
+        builder.Services.AddOutputCache(options =>
+        {
+            options.AddBasePolicy(policy => policy.Expire(TimeSpan.FromSeconds(30)));
+        });
         builder.Services.AddOpenApi();
         builder.AddGoogleCalendar();
     }
     public static void UseWebApi(this WebApplication app)
     {
         app.MapControllers();
-        //app.UseOutputCache();//precisa ser antes do MapEndpoints
-        app.MapEndpoints();
+        app.UseOutputCache();//precisa ser antes do MapEndpoints
+        //app.MapEndpoints();
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
@@ -93,7 +96,7 @@ public static class DependencyInjection
                         IssuedUtc = DateTime.UtcNow,
                         AccessToken = ctx.TokenEndpointResponse.AccessToken,
                         RefreshToken = ctx.TokenEndpointResponse.RefreshToken,
-                        ExpiresInSeconds = long.Parse(ctx.TokenEndpointResponse.ExpiresIn),//TimeSpan.FromDays(300).Seconds,
+                        ExpiresInSeconds = long.Parse(ctx.TokenEndpointResponse.ExpiresIn),
                     };
                     string email = ctx.Principal.FindFirst(ClaimTypes.Email).Value;
                     await dataStore.StoreAsync(email, tokenResponse);

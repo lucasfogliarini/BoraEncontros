@@ -3,14 +3,15 @@ using BoraEncontros.Infraestructure.DataStores;
 using BoraEncontros.Infrastructure;
 using Google.Apis.Util.Store;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DependencyInjection
     {
-        public static void AddInfrastructure(this IServiceCollection services)
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext();
+            services.AddDbContext(configuration);
             services.AddRepositories();
         }
         public static void AddCalendarTokenDataStore(this IServiceCollection services)
@@ -22,9 +23,27 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<ICalendarTokenRepository, CalendarTokenRepository>();
         }
 
-        private static void AddDbContext(this IServiceCollection services)
+        private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<BoraEncontrosDbContext>(options => options.UseInMemoryDatabase(nameof(BoraEncontrosDbContext)));
+            var boraEncontrosConnectionString = configuration.TryGetConnectionString();
+            //services.AddDbContext<BoraEncontrosDbContext>(options => options.UseInMemoryDatabase(nameof(BoraEncontrosDbContext)));
+            services.AddDbContext<BoraEncontrosDbContext>(options => options.UseSqlServer(boraEncontrosConnectionString));
+        }
+
+        private static string? TryGetConnectionString(this IConfiguration configuration)
+        {
+            var boraEncontrosConnectionStringKey = "ConnectionStrings:BoraEncontros";
+            Console.WriteLine($"Trying to get a database connectionString '{boraEncontrosConnectionStringKey}' from Configuration.");
+            var connectionString = configuration[boraEncontrosConnectionStringKey];
+            if (connectionString == null)
+            {
+                var message = $"{boraEncontrosConnectionStringKey} was not found! From builder.Configuration[{boraEncontrosConnectionStringKey}]";
+                Console.WriteLine(message);
+                throw new Exception(message);
+            }
+
+            Console.WriteLine();
+            return connectionString;
         }
     }
 }

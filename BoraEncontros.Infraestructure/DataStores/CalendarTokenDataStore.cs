@@ -15,20 +15,14 @@ internal class CalendarTokenDataStore(ICalendarTokenRepository calendarTokenRepo
             throw new ArgumentException("Invalid token response type.", nameof(response));
 
         var calendarToken = await calendarTokenRepository.GetAsync(email);
-        calendarToken ??= new CalendarToken
+        if (calendarToken?.UpdatedAt.Date == DateTime.Today)
         {
-            Account = new Account
-            {
-                Username = new MailAddress(email).User,
-                Email = email
-            },
-            Provider = "Google"
-        };
-
+            return;
+        }
+        var expiration = DateTime.Now.AddSeconds((double)tokenResponse.ExpiresInSeconds);
+        calendarToken ??= CalendarToken.Create(email, "Google", expiration);
         calendarToken.AccessToken = tokenResponse.AccessToken;
         calendarToken.RefreshToken = tokenResponse.RefreshToken ?? calendarToken.RefreshToken;
-        calendarToken.Expiration = DateTime.UtcNow.AddSeconds((double)tokenResponse.ExpiresInSeconds);
-
         await calendarTokenRepository.CommitScope.CommitAsync();
     }
 

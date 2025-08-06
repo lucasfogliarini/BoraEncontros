@@ -8,7 +8,7 @@ namespace BoraEncontros.GoogleCalendar;
 
 internal class GoogleCalendarService(IDataStore dataStore, IOptions<GoogleCalendarSettings> settings) : ICalendarService
 {
-    public async Task<IEnumerable<EventResponse>> GetEventsAsync(string user, EventRequestFilter eventRequestFilter = null)
+    public async Task<IEnumerable<EventResponse>> GetEventsAsync(string user, EventRequestFilter? eventRequestFilter = null, CancellationToken cancellationToken = default)
     {
         eventRequestFilter ??= new EventRequestFilter();
         var calendarService = await InitializeCalendarServiceAsync(user);
@@ -19,7 +19,7 @@ internal class GoogleCalendarService(IDataStore dataStore, IOptions<GoogleCalend
         request.SingleEvents = true;
         request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
         //var eventsCount = eventsFilter.FavoritesCount ? await EventsCountAsync(user) : null;
-        var events = await request.ExecuteAsync();
+        var events = await request.ExecuteAsync(cancellationToken);
 
         var eventItems = events.Items.AsEnumerable();
 

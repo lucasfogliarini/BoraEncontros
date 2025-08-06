@@ -1,0 +1,35 @@
+name: Build and Deploy Docker to Azure Container App
+
+on:
+   push:
+     branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to Azure Container App
+    runs-on: ubuntu-latest
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Checkout to the branch
+      uses: actions/checkout@v4
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_BORA_CREDS }}
+
+    # https://github.com/Azure/container-apps-deploy-action
+    - name: Deploy to Azure Container App
+      uses: azure/container-apps-deploy-action@v2
+      with:
+        resourceGroup: bora_group
+        containerAppEnvironment: boraencontros-environment
+        containerAppName: boraencontros-api
+        appSourcePath: ${{ github.workspace }}
+        imageToBuild: lucasfogliarini/boraencontros-api:latest
+        registryUrl: docker.io
+        registryUsername: lucasfogliarini
+        registryPassword: ${{ secrets.REGISTRY_PASSWORD }}

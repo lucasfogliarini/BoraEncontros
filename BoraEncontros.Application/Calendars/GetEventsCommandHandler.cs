@@ -15,7 +15,7 @@ public class GetEventsCommandHandler(ICalendarService calendarService, ICalendar
 
         try
         {
-            var events = await calendarService.GetEventsAsync(calendarToken.Account.Email);
+            var events = await calendarService.GetEventsAsync(calendarToken.Account.Email, query.EventRequestFilter);
             var response = new GetEventsResponse(events);
             return Result.Success(response);
         }
@@ -27,6 +27,6 @@ public class GetEventsCommandHandler(ICalendarService calendarService, ICalendar
 
 }
 
-public record GetEventsQuery(string Username) : IQuery<GetEventsResponse>;
+public record GetEventsQuery(string Username, EventRequestFilter? EventRequestFilter = null) : IQuery<GetEventsResponse>;
 
 public record GetEventsResponse(IEnumerable<EventResponse> Events);

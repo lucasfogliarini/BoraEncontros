@@ -2,5 +2,5 @@
 
 public interface ICalendarService
 {
-    Task<IEnumerable<EventResponse>> GetEventsAsync(string user, EventRequestFilter eventRequestFilter = null);
+    Task<IEnumerable<EventResponse>> GetEventsAsync(string user, EventRequestFilter? eventRequestFilter = null, CancellationToken cancellationToken = default);
 }

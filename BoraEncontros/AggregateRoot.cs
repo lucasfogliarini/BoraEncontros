@@ -23,6 +23,7 @@ public abstract class AggregateRoot : Entity, IAuditable
     public void CreatedNow()
     {
         CreatedAt = DateTime.Now;
+        UpdatedAt = CreatedAt;
     }
     public void UpdatedNow()
     {
