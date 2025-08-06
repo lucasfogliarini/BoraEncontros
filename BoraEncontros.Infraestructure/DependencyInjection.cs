@@ -25,33 +25,19 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var boraEncontrosConnectionString = configuration.TryGetConnectionString();
-            if(boraEncontrosConnectionString == null)
+            var boraEncontrosConnectionStringKey = "BoraEncontros";
+            Console.WriteLine($"Trying to get a database connectionString '{boraEncontrosConnectionStringKey}' from Configuration.");
+            var boraEncontrosConnectionString = configuration.GetConnectionString(boraEncontrosConnectionStringKey);
+            if (boraEncontrosConnectionString == null)
             {
-                Console.WriteLine("No connection string found, using InMemoryDatabase for BoraEncontrosDbContext.");
+                Console.WriteLine("BoraEncontros ConnectionString NOT found, using InMemoryDatabase for BoraEncontrosDbContext.");
                 services.AddDbContext<BoraEncontrosDbContext>(options => options.UseInMemoryDatabase(nameof(BoraEncontrosDbContext)));
             }
             else
             {
-                Console.WriteLine($"Using connection string for BoraEncontrosDbContext.");
+                Console.WriteLine($"Using BoraEncontros ConnectionString for BoraEncontrosDbContext.");
                 services.AddDbContext<BoraEncontrosDbContext>(options => options.UseSqlServer(boraEncontrosConnectionString));
             }
-        }
-
-        private static string? TryGetConnectionString(this IConfiguration configuration)
-        {
-            var boraEncontrosConnectionStringKey = "ConnectionStrings:BoraEncontros";
-            Console.WriteLine($"Trying to get a database connectionString '{boraEncontrosConnectionStringKey}' from Configuration.");
-            var connectionString = configuration[boraEncontrosConnectionStringKey];
-            if (connectionString == null)
-            {
-                var message = $"{boraEncontrosConnectionStringKey} was not found! From builder.Configuration[{boraEncontrosConnectionStringKey}]";
-                Console.WriteLine(message);
-                throw new Exception(message);
-            }
-
-            Console.WriteLine();
-            return connectionString;
         }
     }
 }
