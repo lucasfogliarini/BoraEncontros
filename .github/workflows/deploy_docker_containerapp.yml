@@ -27,8 +27,8 @@ jobs:
         resourceGroup: bora_group
         containerAppEnvironment: boraencontros-environment
         containerAppName: boraencontros-api
-        appSourcePath: ./BoraEncontros.WebApi
-        #appSourcePath: ${{ github.workspace }}
+        appSourcePath: ${{ github.workspace }}
+        dockerfilePath: BoraEncontros.WebApi/Dockerfile
         imageToBuild: lucasfogliarini/boraencontros-api:latest
         registryUrl: docker.io
         registryUsername: lucasfogliarini

@@ -26,8 +26,8 @@ public static class DependencyInjection
     }
     public static void UseWebApi(this WebApplication app)
     {
-        app.MapControllers();
         app.UseOutputCache();//precisa ser antes do MapEndpoints
+        app.MapControllers();
         //app.MapEndpoints();
         if (app.Environment.IsDevelopment())
         {

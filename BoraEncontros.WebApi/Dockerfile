@@ -1,28 +1,16 @@
-# Usa a imagem oficial do SDK do .NET 9 como base
+# Etapa de build e publicação
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
 
-# Define o diretório de trabalho dentro do container
-WORKDIR /app
-
-# Copia os arquivos do projeto para o diretório de trabalho
 COPY . .
 
-# Restaura as dependências e compila o projeto
-RUN dotnet restore
-RUN dotnet build -c Release -o /app/build
+RUN dotnet publish "BoraEncontros.WebApi/BoraEncontros.WebApi.csproj" -c Release -o /app/publish
 
-# Define a imagem de publicação
+# Etapa final com imagem de runtime
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
-
-# Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia os arquivos de construção do estágio de compilação
-COPY --from=build /app/build .
+COPY --from=build /app/publish .
 
-# Exponha a porta que sua aplicação será executada
 EXPOSE 8080
-EXPOSE 8081
-
-# Inicia a aplicação
 ENTRYPOINT ["dotnet", "BoraEncontros.WebApi.dll"]
