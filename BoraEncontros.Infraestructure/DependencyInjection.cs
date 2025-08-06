@@ -26,8 +26,16 @@ namespace Microsoft.Extensions.DependencyInjection
         private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var boraEncontrosConnectionString = configuration.TryGetConnectionString();
-            //services.AddDbContext<BoraEncontrosDbContext>(options => options.UseInMemoryDatabase(nameof(BoraEncontrosDbContext)));
-            services.AddDbContext<BoraEncontrosDbContext>(options => options.UseSqlServer(boraEncontrosConnectionString));
+            if(boraEncontrosConnectionString == null)
+            {
+                Console.WriteLine("No connection string found, using InMemoryDatabase for BoraEncontrosDbContext.");
+                services.AddDbContext<BoraEncontrosDbContext>(options => options.UseInMemoryDatabase(nameof(BoraEncontrosDbContext)));
+            }
+            else
+            {
+                Console.WriteLine($"Using connection string for BoraEncontrosDbContext.");
+                services.AddDbContext<BoraEncontrosDbContext>(options => options.UseSqlServer(boraEncontrosConnectionString));
+            }
         }
 
         private static string? TryGetConnectionString(this IConfiguration configuration)
