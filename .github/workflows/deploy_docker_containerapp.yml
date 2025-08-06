@@ -21,13 +21,14 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_BORA_CREDS }}
 
-    - name: Deploy to Azure Container App
+    - name: Deploy to boraencontros-api (Azure Container App)
       uses: azure/container-apps-deploy-action@v2
       with:
         resourceGroup: bora_group
         containerAppEnvironment: boraencontros-environment
         containerAppName: boraencontros-api
-        appSourcePath: ${{ github.workspace }}
+        appSourcePath: ./BoraEncontros.WebApi
+        #appSourcePath: ${{ github.workspace }}
         imageToBuild: lucasfogliarini/boraencontros-api:latest
         registryUrl: docker.io
         registryUsername: lucasfogliarini
