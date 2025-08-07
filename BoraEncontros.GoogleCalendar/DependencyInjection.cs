@@ -13,4 +13,11 @@ public static class DependencyInjection
         services.AddScoped<ICalendarService, GoogleCalendarService>();
         return services;
     }
+
+    public static IServiceCollection AddGoogleCalendarHealthCheck(this IServiceCollection services)
+    {
+        services.AddHealthChecks()
+                .AddCheck<GoogleCalendarSettingsHealthCheck>(nameof(GoogleCalendarSettingsHealthCheck));
+        return services;
+    }
 }

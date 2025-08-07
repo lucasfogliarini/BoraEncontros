@@ -1,4 +1,5 @@
 ﻿using BoraEncontros.Accounts.Repositories;
+using BoraEncontros.Infraestructure;
 using BoraEncontros.Infraestructure.DataStores;
 using BoraEncontros.Infrastructure;
 using Google.Apis.Util.Store;
@@ -22,10 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddBoraEncontrosDbContextCheck(this IServiceCollection services)
         {
             services.AddHealthChecks()
-            .AddDbContextCheck<BoraEncontrosDbContext>(customTestQuery: async (context, ct) =>
-            {
-                return context.Database.ProviderName.Contains("InMemory") ? false : await context.Database.CanConnectAsync(ct);
-            });
+                    .AddCheck<DbContextHealthCheck<BoraEncontrosDbContext>>(nameof(BoraEncontrosDbContext));
         }
 
         private static void AddRepositories(this IServiceCollection services)

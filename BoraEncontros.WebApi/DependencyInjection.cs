@@ -72,6 +72,7 @@ public static class DependencyInjection
     private static void AddHealthChecks(this WebApplicationBuilder builder)
     {
         builder.Services.AddBoraEncontrosDbContextCheck();
+        builder.Services.AddGoogleCalendarHealthCheck();
     }
     private static void UseHealthChecks(this WebApplication app)
     {
@@ -85,14 +86,15 @@ public static class DependencyInjection
 
                 var result = JsonSerializer.Serialize(new
                 {
-                    applicationVersion = version,
+                    version,
+                    app.Environment.EnvironmentName,
                     status = report.Status.ToString(),
                     checks = report.Entries.Select(entry => new
                     {
                         name = entry.Key,
                         status = entry.Value.Status.ToString(),
                         description = entry.Value.Description,
-                        data = entry.Value.Data
+                        //data = entry.Value.Data
                     })
                 });
 
@@ -100,8 +102,7 @@ public static class DependencyInjection
             }
         });
     }
-
-    public static void AddGoogleCalendar(this WebApplicationBuilder builder)
+    private static void AddGoogleCalendar(this WebApplicationBuilder builder)
     {
         builder.Services.AddGoogleCalendarService();
         builder.Services.AddCalendarTokenDataStore();
