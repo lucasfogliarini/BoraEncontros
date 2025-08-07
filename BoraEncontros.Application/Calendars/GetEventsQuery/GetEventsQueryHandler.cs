@@ -4,7 +4,7 @@ using CSharpFunctionalExtensions;
 
 namespace BoraEncontros.Application.Calendars;
 
-public class GetEventsCommandHandler(ICalendarService calendarService, ICalendarTokenRepository calendarTokenRepository) : IQueryHandler<GetEventsQuery, GetEventsResponse>
+public class GetEventsQueryHandler(ICalendarService calendarService, ICalendarTokenRepository calendarTokenRepository) : IQueryHandler<GetEventsQuery, GetEventsResponse>
 {
     public async Task<Result<GetEventsResponse>> Handle(GetEventsQuery query, CancellationToken cancellationToken = default)
     {

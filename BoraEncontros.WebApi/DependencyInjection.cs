@@ -18,10 +18,11 @@ public static class DependencyInjection
 {
     public static void AddWebApi(this WebApplicationBuilder builder)
     {
+        builder.Services.AddApplication(builder.Configuration);
         builder.Services.AddControllers();
         //builder.Services.AddEndpoints();
         builder.AddHealthChecks();
-        builder.AddGoogleCalendar();
+        builder.AddGoogleCalendarOpenIdConnect();
         builder.Services.AddProblemDetails();
         builder.AddOutputCache();
         builder.Services.AddOpenApi();
@@ -97,11 +98,8 @@ public static class DependencyInjection
             }
         });
     }
-    private static void AddGoogleCalendar(this WebApplicationBuilder builder)
+    private static void AddGoogleCalendarOpenIdConnect(this WebApplicationBuilder builder)
     {
-        builder.Services.AddGoogleCalendarService();
-        builder.Services.AddCalendarTokenDataStore();
-
         //https://developers.google.com/api-client-library/dotnet/guide/aaa_oauth#web-applications-asp.net-core-3
         builder.Services
             .AddAuthentication(o =>

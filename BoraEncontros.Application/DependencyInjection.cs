@@ -1,24 +1,29 @@
 ﻿using BoraEncontros;
 using BoraEncontros.Application;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
-    public static void AddApplication(this IServiceCollection services)
+    public static void AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHandlers(Assembly.GetExecutingAssembly());
+        services.AddInfrastructure(configuration);
+        services.AddGoogleCalendarService();
+        services.AddCalendarTokenDataStore();
     }
 
-    public static IServiceCollection AddHandlers(this IServiceCollection services, Assembly assembly)
+    private static IServiceCollection AddHandlers(this IServiceCollection services, Assembly assembly)
     {
         var handlerInterfaces = new[]
         {
             typeof(ICommandHandler<>),
             typeof(ICommandHandler<,>),
             typeof(IQueryHandler<,>),
-            typeof(IDomainEventHandler<>)
+            typeof(IDomainEventHandler<>),
+            typeof(IIntegrationEventHandler<>)
         };
 
         var types = assembly.GetTypes();
