@@ -24,7 +24,7 @@ jobs:
     - name: Deploy to boraencontros-api (Azure Container App)
       uses: azure/container-apps-deploy-action@v2
       with:
-        resourceGroup: bora_group
+        resourceGroup: rg-bora
         containerAppEnvironment: boraencontros-environment
         containerAppName: boraencontros-api
         appSourcePath: ${{ github.workspace }}
