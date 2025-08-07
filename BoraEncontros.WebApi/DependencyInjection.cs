@@ -23,10 +23,7 @@ public static class DependencyInjection
         builder.AddHealthChecks();
         builder.AddGoogleCalendar();
         builder.Services.AddProblemDetails();
-        builder.Services.AddOutputCache(options =>
-        {
-            options.AddBasePolicy(policy => policy.Expire(TimeSpan.FromSeconds(30)));
-        });
+        builder.AddOutputCache();
         builder.Services.AddOpenApi();
     }
     public static void UseWebApi(this WebApplication app)
@@ -139,5 +136,23 @@ public static class DependencyInjection
                     await dataStore.StoreAsync(email, tokenResponse);
                 };
             });
+    }
+    private static void AddOutputCache(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddOutputCache(options =>
+        {
+            options.AddBasePolicy(policy =>
+            {
+                policy.Expire(TimeSpan.FromSeconds(30));
+            });
+            options.AddPolicy("per-user", policy =>
+            {
+                policy.VaryByValue(context =>
+                {
+                    var userId = context.User.FindFirst("sub")?.Value ?? "anonymous";
+                    return new KeyValuePair<string, string>("userId", userId);
+                });
+            });
+        });
     }
 }

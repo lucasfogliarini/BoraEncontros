@@ -24,7 +24,7 @@ namespace BoraEncontros.WebApi.Controllers
         }
 
         [HttpGet("{username}/events")]
-        [OutputCache(Duration = 5)]
+        [OutputCache(PolicyName = "per-user", Duration = 10)]
         public async Task<IActionResult> GetEventsAsync(string username, [FromQuery] EventRequestFilter eventsFilterQuery, [FromBody] EventRequestFilter? eventsFilterBody = null, CancellationToken cancellationToken = default)
         {
             var eventsFilter = eventsFilterBody ?? eventsFilterQuery;

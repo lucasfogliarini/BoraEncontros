@@ -12,7 +12,7 @@ services:
       DOTNET_ENVIRONMENT: Development
       ASPNETCORE_URLS: "http://+:1000"
       
-      ConnectionStrings__BoraEncontros: "Server=tcp:bora-db.database.windows.net,1433;Initial Catalog=bora-encontros;Persist Security Info=False;User ID=bora;Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=10;"
+      ConnectionStrings__BoraEncontros: "Server=tcp:{server}.database.windows.net,1433;Initial Catalog={database};Persist Security Info=False;User ID=bora;Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=10;"
       GoogleCalendarSettings__ApplicationName: "BoraEncontros"
       GoogleCalendarSettings__ClientId: "{clientId}"
       GoogleCalendarSettings__ClientSecret: "{clientSecret}"
