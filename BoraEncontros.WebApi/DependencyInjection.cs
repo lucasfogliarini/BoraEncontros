@@ -20,27 +20,25 @@ public static class DependencyInjection
     {
         builder.Services.AddControllers();
         //builder.Services.AddEndpoints();
+        builder.AddHealthChecks();
+        builder.AddGoogleCalendar();
         builder.Services.AddProblemDetails();
         builder.Services.AddOutputCache(options =>
         {
             options.AddBasePolicy(policy => policy.Expire(TimeSpan.FromSeconds(30)));
         });
         builder.Services.AddOpenApi();
-        builder.AddGoogleCalendar();
-        builder.AddHealthChecks();
-
     }
     public static void UseWebApi(this WebApplication app)
     {
         app.UseOutputCache();//precisa ser antes do MapEndpoints
         app.MapControllers();
         //app.MapEndpoints();
+        app.MapHealthChecks();
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
         }
-        app.UseHttpsRedirection();
-        app.UseHealthChecks();
         //app.UseAuthorization();
     }
 
@@ -74,10 +72,10 @@ public static class DependencyInjection
         builder.Services.AddBoraEncontrosDbContextCheck();
         builder.Services.AddGoogleCalendarHealthCheck();
     }
-    private static void UseHealthChecks(this WebApplication app)
+    private static void MapHealthChecks(this WebApplication app)
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
-        app.UseHealthChecks("/health", new HealthCheckOptions
+        app.MapHealthChecks("/health", new HealthCheckOptions
         {
             Predicate = _ => true, // Executa todos os health checks
             ResponseWriter = async (context, report) =>

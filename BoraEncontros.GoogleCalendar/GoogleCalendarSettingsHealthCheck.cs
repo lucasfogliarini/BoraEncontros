@@ -17,13 +17,11 @@ internal class GoogleCalendarSettingsHealthCheck(IOptions<GoogleCalendarSettings
             errors.Add("ClientId is missing.");
         if (string.IsNullOrWhiteSpace(_settings.ClientSecret))
             errors.Add("ClientSecret is missing.");
-        if (string.IsNullOrWhiteSpace(_settings.TokenFolder))
-            errors.Add("TokenFolder is missing.");
+        if (_settings.Scopes.Length == 0)
+            errors.Add("ClientSecret is missing.");
 
         if (errors.Count == 0)
-        {
             return Task.FromResult(HealthCheckResult.Healthy("GoogleCalendarSettings are properly configured."));
-        }
 
         var description = string.Join(" ", errors);
         return Task.FromResult(HealthCheckResult.Unhealthy($"Invalid GoogleCalendarSettings: {description}"));

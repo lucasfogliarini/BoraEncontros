@@ -16,4 +16,5 @@ services:
       GoogleCalendarSettings__ApplicationName: "BoraEncontros"
       GoogleCalendarSettings__ClientId: "{clientId}"
       GoogleCalendarSettings__ClientSecret: "{clientSecret}"
+      GoogleCalendarSettings__Scopes__0: "https://www.googleapis.com/auth/calendar"
       GoogleCalendarSettings__TokenFolder: "token.json"
