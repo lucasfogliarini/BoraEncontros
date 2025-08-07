@@ -27,18 +27,20 @@ public static class DependencyInjection
         });
         builder.Services.AddOpenApi();
         builder.AddGoogleCalendar();
+        builder.AddHealthChecks();
+
     }
     public static void UseWebApi(this WebApplication app)
     {
         app.UseOutputCache();//precisa ser antes do MapEndpoints
         app.MapControllers();
         //app.MapEndpoints();
-        app.MapVersionEndpoint();
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
         }
         app.UseHttpsRedirection();
+        app.UseHealthChecks();
         //app.UseAuthorization();
     }
 
@@ -67,11 +69,36 @@ public static class DependencyInjection
 
         return app;
     }
-    private static void MapVersionEndpoint(this WebApplication app)
+    private static void AddHealthChecks(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddBoraEncontrosDbContextCheck();
+    }
+    private static void UseHealthChecks(this WebApplication app)
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
-        app.MapGet("/version", () => Results.Text(version));
+        app.UseHealthChecks("/health", new HealthCheckOptions
+        {
+            Predicate = _ => true, // Executa todos os health checks
+            ResponseWriter = async (context, report) =>
+            {
+                context.Response.ContentType = "application/json";
 
+                var result = JsonSerializer.Serialize(new
+                {
+                    applicationVersion = version,
+                    status = report.Status.ToString(),
+                    checks = report.Entries.Select(entry => new
+                    {
+                        name = entry.Key,
+                        status = entry.Value.Status.ToString(),
+                        description = entry.Value.Description,
+                        data = entry.Value.Data
+                    })
+                });
+
+                await context.Response.WriteAsync(result);
+            }
+        });
     }
 
     public static void AddGoogleCalendar(this WebApplicationBuilder builder)

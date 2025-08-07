@@ -18,11 +18,20 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<IDataStore, CalendarTokenDataStore>();
         }
+
+        public static void AddBoraEncontrosDbContextCheck(this IServiceCollection services)
+        {
+            services.AddHealthChecks()
+            .AddDbContextCheck<BoraEncontrosDbContext>(customTestQuery: async (context, ct) =>
+            {
+                return context.Database.ProviderName.Contains("InMemory") ? false : await context.Database.CanConnectAsync(ct);
+            });
+        }
+
         private static void AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<ICalendarTokenRepository, CalendarTokenRepository>();
         }
-
         private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var boraEncontrosConnectionStringKey = "BoraEncontros";
