@@ -1,5 +1,4 @@
-﻿using BoraEncontros.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace BoraEncontros.Infraestructure;
