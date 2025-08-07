@@ -95,13 +95,7 @@ public static class EventExtensions
         }
         return 0;
     }
-    public static bool IsPrivate(this Event @event)
-    {
-        if (@event.Description == null) return false;
-        var isPrivate = new[] { EventResponse.PRIVADO, EventResponse.PRIVATE }.Any(pvt => @event.Description.Contains(pvt));
-
-        return isPrivate;
-    }
+    public static bool IsPublic(this Event @event) => @event.Visibility == "public";
     public static DateTime? GetDeadLine(this Event @event)
     {
         var reminderMinutes = @event.Reminders.Overrides?.FirstOrDefault()?.Minutes;

@@ -1,0 +1,17 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureServiceBusConnectionString": "{azureServiceBusConnectionString}",
+
+    "GoogleCalendarSettings:ApplicationName": "BoraEncontros",
+    "GoogleCalendarSettings:ClientId": "{clientId}",
+    "GoogleCalendarSettings:ClientSecret": "{clientSecret}",
+    "GoogleCalendarSettings:TokenFolder": "token.json",
+    "GoogleCalendarSettings:Scopes:0": "https://www.googleapis.com/auth/calendar"
+  },
+  "ConnectionStrings": {
+    "BoraEncontros": "{connString}"
+  }
+}

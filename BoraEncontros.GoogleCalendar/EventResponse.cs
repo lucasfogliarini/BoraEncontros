@@ -7,8 +7,8 @@ public class EventResponse
     public string? Id { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
-    public DateTime? Start { get; set; }
-    public DateTime? End { get; set; }
+    public DateTimeOffset? Start { get; set; }
+    public DateTimeOffset? End { get; set; }
     public string? Location { get; set; }
     public DateTime? Deadline { get; set; }
     public string? Chat { get; set; }
@@ -35,10 +35,10 @@ public class EventResponse
             Title = @event.Summary,
             Description = @event.Description,
             Location = @event.Location,
-            Start = @event.Start.DateTime ?? DateTime.Parse(@event.Start.Date),
-            End = @event.End.DateTime ?? DateTime.Parse(@event.End.Date),
+            Start = @event.Start.DateTimeDateTimeOffset,
+            End = @event.End.DateTimeDateTimeOffset,
             GoogleEventUrl = @event.HtmlLink,
-            Public = !@event.IsPrivate(),
+            Public = @event.IsPublic(),
             Chat = @event.GetWhatsAppGroupChat(),
             ConferenceUrl = @event.GetConferenceUrl(),
             //Attendees = attendeeOutputs,

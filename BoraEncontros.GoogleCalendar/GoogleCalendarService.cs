@@ -29,6 +29,16 @@ internal class GoogleCalendarService(IDataStore dataStore, IOptions<GoogleCalend
         return eventsResponse;
     }
 
+    public async Task<EventResponse> CreateAsync(string user, EventRequest eventRequest, CancellationToken cancellationToken = default)
+    {
+        var calendarService = await InitializeCalendarServiceAsync(user);
+        await InitializeCalendarServiceAsync(user);
+        var request = calendarService.Events.Insert(eventRequest, eventRequest.CalendarId);
+        request.ConferenceDataVersion = 1;
+        var googleEvent = await request.ExecuteAsync(cancellationToken);
+        return (EventResponse)googleEvent;
+    }
+
     private async Task<CalendarService> InitializeCalendarServiceAsync(string user)
     {
         var googleCalendarSettings = settings.Value;

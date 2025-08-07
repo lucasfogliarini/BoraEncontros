@@ -11,7 +11,6 @@ public class EventCreatedConsumer(IQueryHandler<GetEventsQuery, GetEventsRespons
         [ServiceBusTrigger("event-created", Connection = "AzureServiceBusConnectionString")]
         EventCreatedIntegrationEvent eventCreated)
     {
-         var events = await queryHandler.Handle(new GetEventsQuery("lucasfogliarini"));
         await integrationEventHandler.HandleAsync(eventCreated);
     }
 }
