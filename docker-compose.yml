@@ -7,32 +7,15 @@ services:
       dockerfile: BoraEncontros.WebApi/Dockerfile
     container_name: BoraEncontros.WebApi
     ports:
-      - "8080:8080"  # HTTP
-    environment:
-      DOTNET_ENVIRONMENT: Development
-      ASPNETCORE_URLS: "http://+:8080"
-      
-      ConnectionStrings__BoraEncontros: "Server=tcp:{server}.database.windows.net,1433;Initial Catalog={database};Persist Security Info=False;User ID=bora;Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=10;"
-      GoogleCalendarSettings__ApplicationName: "BoraEncontros"
-      GoogleCalendarSettings__ClientId: "{clientId}"
-      GoogleCalendarSettings__ClientSecret: "{clientSecret}"
-      GoogleCalendarSettings__Scopes__0: "https://www.googleapis.com/auth/calendar"
-      GoogleCalendarSettings__TokenFolder: "token.json"
+      - "1000:8080"  # HTTP
+    env_file: .env
+
 
   workers:
     build:
       context: .
       dockerfile: BoraEncontros.Workers/Dockerfile
     container_name: BoraEncontros.Workers
-    environment:
-      DOTNET_ENVIRONMENT: Development
-      AzureWebJobsStorage: "UseDevelopmentStorage=true"
-      FUNCTIONS_WORKER_RUNTIME: "dotnet-isolated"
-      
-      AzureServiceBusConnectionString: "Endpoint=sb://{server}.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={accessKey}"
-      ConnectionStrings__BoraEncontros: "Server=tcp:{server}.database.windows.net,1433;Initial Catalog={database};Persist Security Info=False;User ID=bora;Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=10;"
-      GoogleCalendarSettings__ApplicationName: "BoraEncontros"
-      GoogleCalendarSettings__ClientId: "{clientId}"
-      GoogleCalendarSettings__ClientSecret: "{clientSecret}"
-      GoogleCalendarSettings__Scopes__0: "https://www.googleapis.com/auth/calendar"
-      GoogleCalendarSettings__TokenFolder: "token.json"
+    ports:
+      - "1001:8080"
+    env_file: .env

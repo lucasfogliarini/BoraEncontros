@@ -1,6 +1,7 @@
 # Etapa de build
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /src
+
+WORKDIR /app
 
 COPY . . 
 
@@ -13,10 +14,8 @@ WORKDIR /home/site/wwwroot
 
 COPY --from=build /app/publish . 
 
-# Porta padrão do host de funções
-#ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
-#    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
+# Opcional: logs mais verbosos no console
+#ENV AzureFunctionsJobHost__logging__console__isEnabled=true
 
-EXPOSE 9090
-
+EXPOSE 8080
 # O ENTRYPOINT é definido automaticamente pela imagem do Azure Functions
