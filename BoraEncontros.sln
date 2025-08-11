@@ -12,8 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		.github\workflows\deploy_docker_containerapp.yml = .github\workflows\deploy_docker_containerapp.yml
 		docker-compose.yml = docker-compose.yml
+		.github\workflows\deploy-api.yml = .github\workflows\deploy-api.yml
+		.github\workflows\deploy-workers.yml = .github\workflows\deploy-workers.yml
 		k6.js = k6.js
 		README.md = README.md
 	EndProjectSection

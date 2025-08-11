@@ -1,12 +1,11 @@
-﻿name: Build and Deploy Docker to Azure Container App
+﻿name: Build and Deploy boraencontros-workers to Azure Container App
 
 on:
-  push:
-    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
-    name: Build and Deploy to Azure Container App
+    name: Build and Deploy
     runs-on: ubuntu-latest
     environment:
       name: 'Production'
@@ -26,10 +25,10 @@ jobs:
       with:
         resourceGroup: rg-bora
         containerAppEnvironment: boraencontros-environment
-        containerAppName: boraencontros-api
+        containerAppName: boraencontros-workers
         appSourcePath: ${{ github.workspace }}
-        dockerfilePath: BoraEncontros.WebApi/Dockerfile
-        imageToBuild: lucasfogliarini/boraencontros-api:latest
+        dockerfilePath: BoraEncontros.Workers/Dockerfile
+        imageToBuild: lucasfogliarini/boraencontros-workers:latest
         registryUrl: docker.io
         registryUsername: lucasfogliarini
         registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
