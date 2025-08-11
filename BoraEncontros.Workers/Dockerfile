@@ -8,7 +8,7 @@ COPY . .
 RUN dotnet publish "BoraEncontros.Workers/BoraEncontros.Workers.csproj" -c Release -o /app/publish
 
 # Etapa final com imagem base de Azure Functions .NET Isolated
-FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated-9.0 AS runtime
+FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated9.0 AS runtime
 WORKDIR /home/site/wwwroot
 
 COPY --from=build /app/publish . 
@@ -17,4 +17,6 @@ COPY --from=build /app/publish .
 #ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
 #    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
 
-ENTRYPOINT [ "dotnet", "BoraEncontros.Workers.dll" ]
+EXPOSE 9090
+
+# O ENTRYPOINT é definido automaticamente pela imagem do Azure Functions
