@@ -4,7 +4,7 @@ using Microsoft.Azure.Functions.Worker;
 
 namespace BoraEncontros.Workers;
 
-public class EventCreatedConsumer(IQueryHandler<GetEventsQuery, GetEventsResponse> queryHandler, IIntegrationEventHandler<EventCreatedIntegrationEvent> integrationEventHandler)
+public class EventCreatedConsumer(IIntegrationEventHandler<EventCreatedIntegrationEvent> integrationEventHandler)
 {
     [Function(nameof(EventCreatedConsumer))]
     public async Task Run(
