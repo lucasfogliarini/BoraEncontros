@@ -1,0 +1,24 @@
+﻿using BoraEncontros.Application;
+using BoraEncontros.Application.Calendars;
+using Microsoft.Azure.Functions.Worker;
+
+namespace BoraEncontros.Workers.EventsJobs;
+
+public class CaldeiraEventsJob(IQueryHandler<CrawlCaldeiraEventsQuery, CaldeiraEventsResponse> queryHandler)
+{
+    const string EVENTS_QUERY = "/agenda/";
+
+    [Function(nameof(CaldeiraEventsJob))]
+    [ServiceBusOutput("event-created", Connection = "AzureServiceBusConnectionString")]
+    public async Task<IEnumerable<EventCreatedIntegrationEvent>> RunAsync([TimerTrigger("%CrawlerCron%", RunOnStartup = true)] TimerInfo timer)
+    {
+        DateTime startDate = DateTime.Today;
+        DateTime endDate = startDate.AddDays(7);// timer.ScheduleStatus.Next;
+
+        var crawlCaldeiraEventsQuery = new CrawlCaldeiraEventsQuery(EVENTS_QUERY, startDate, endDate);
+        var caldeiraEventsResponse = await queryHandler.Handle(crawlCaldeiraEventsQuery);
+        if(caldeiraEventsResponse.IsFailure)
+            throw new InvalidOperationException(caldeiraEventsResponse.Error);
+        return caldeiraEventsResponse.Value.Events;
+    }
+}
