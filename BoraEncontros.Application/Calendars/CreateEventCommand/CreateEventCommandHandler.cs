@@ -18,6 +18,7 @@ public class CreateEventCommandHandler(ICalendarService calendarService, ILogger
 
         var eventRequest = new EventRequest
         {
+            CalendarId = command.Event.CalendarId,
             Title = command.Event.Title,
             EventLink = command.Event.EventLink,
             Description = command.Event.EventLink,

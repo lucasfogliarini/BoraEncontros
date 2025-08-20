@@ -22,7 +22,8 @@ public class CrawlCaldeiraEventsQueryHandler(ILogger<CrawlCaldeiraEventsQueryHan
 
             var events = eventsCrawled.Select(e => new Event
             {
-                CalendarEmail = "lucasfogliarini@gmail.com",
+                CalendarEmail = Event.CalendarEmailDefault,
+                CalendarId = Event.CalendarIdDefault,
                 Title = e.Title,
                 Start = new DateTimeOffset(e.DateTime),
                 Description = e.Price,
