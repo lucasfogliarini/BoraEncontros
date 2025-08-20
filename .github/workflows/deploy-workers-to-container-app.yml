@@ -1,4 +1,4 @@
-﻿name: Build and Deploy boraencontros-workers to Azure Container App
+﻿name: Deploy boraencontros-workers to Azure Container App
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-﻿name: Build and Deploy boraencontros-api to Azure Container App
+﻿name: Deploy boraencontros-api to Azure Container App
 
 on:
   push:
