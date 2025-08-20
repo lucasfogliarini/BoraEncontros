@@ -18,7 +18,7 @@ public class EventCreatedIntegrationEventHandler(ICalendarService calendarServic
         {
             Title = integrationEvent.Title,
             EventLink = integrationEvent.EventLink,
-            Description = integrationEvent.Description,
+            Description = integrationEvent.EventLink,
             Location = integrationEvent.Location,
             Start = integrationEvent.Start,
             End = integrationEvent.End ?? integrationEvent.Start.AddHours(1),
