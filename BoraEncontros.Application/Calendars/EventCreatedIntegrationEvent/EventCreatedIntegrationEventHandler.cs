@@ -7,16 +7,27 @@ public class EventCreatedIntegrationEventHandler(ICalendarService calendarServic
 {
     public async Task HandleAsync(EventCreatedIntegrationEvent integrationEvent, CancellationToken cancellationToken = default)
     {
+        logger.LogInformation(
+            "Integrando o evento '{Title}' do dia {Start} na agenda '{Agenda}'",
+            integrationEvent.Title,
+            integrationEvent.Start,
+            integrationEvent.CalendarEmail
+        );
+
         var eventRequest = new EventRequest
         {
             Title = integrationEvent.Title,
+            EventLink = integrationEvent.EventLink,
             Description = integrationEvent.Description,
             Location = integrationEvent.Location,
             Start = integrationEvent.Start,
             End = integrationEvent.End ?? integrationEvent.Start.AddHours(1),
             Public = integrationEvent.Public,
         };
+
         await calendarService.CreateAsync(integrationEvent.CalendarEmail, eventRequest, cancellationToken);
+
+        logger.LogInformation("Evento '{Title}' criado com sucesso na agenda {Agenda}", integrationEvent.Title, integrationEvent.CalendarEmail);
     }
 }
 

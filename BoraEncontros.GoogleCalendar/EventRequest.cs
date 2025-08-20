@@ -7,6 +7,7 @@ public class EventRequest
     public required string Title { get; set; }
     public required DateTimeOffset Start { get; set; }
     public required DateTimeOffset End { get; set; }
+    public required string EventLink { get; set; }
     public string CalendarId { get; set; } = "primary";
     public string? Description { get; set; }
     public string? Location { get; set; }
@@ -19,6 +20,7 @@ public class EventRequest
             Summary = eventRequest.Title,
             Description = eventRequest.Description,
             Location = eventRequest.Location,
+            ETag = eventRequest.EventLink,
             Start = new EventDateTime
             {
                 DateTimeDateTimeOffset = eventRequest.Start,
