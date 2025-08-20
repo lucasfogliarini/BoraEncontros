@@ -1,5 +1,5 @@
 ﻿using BoraEncontros.Application;
-using BoraEncontros.Application.Crawlers;
+using BoraEncontros.Application.EventCrawlers;
 using BoraEncontros.Events;
 using Microsoft.Azure.Functions.Worker;
 

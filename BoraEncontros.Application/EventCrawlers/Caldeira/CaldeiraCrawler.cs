@@ -1,8 +1,8 @@
 ﻿using AngleSharp.Dom;
 
-namespace BoraEncontros.Application.Crawlers;
+namespace BoraEncontros.Application.EventCrawlers;
 
-public class CaldeiraCrawler : BoraCrawler
+public class CaldeiraCrawler : EventCrawler
 {
     const string CALDEIRA_DOMAIN = "https://institutocaldeira.org.br";
 

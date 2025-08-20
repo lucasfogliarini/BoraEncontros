@@ -1,4 +1,4 @@
-﻿namespace BoraEncontros.Application.Crawlers;
+﻿namespace BoraEncontros.Application.EventCrawlers;
 
 public class CrawledEvent
 {

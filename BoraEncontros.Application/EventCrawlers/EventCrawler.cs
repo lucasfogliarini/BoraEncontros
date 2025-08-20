@@ -2,9 +2,9 @@
 using AngleSharp.Dom;
 using System.Globalization;
 
-namespace BoraEncontros.Application.Crawlers;
+namespace BoraEncontros.Application.EventCrawlers;
 
-public abstract class BoraCrawler
+public abstract class EventCrawler
 {
     public string? EventsAbsolutePath { get; set; }
 

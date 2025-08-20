@@ -2,7 +2,7 @@
 using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
 
-namespace BoraEncontros.Application.Crawlers;
+namespace BoraEncontros.Application.EventCrawlers;
 
 public class CrawlCaldeiraEventsQueryHandler(ILogger<CrawlCaldeiraEventsQueryHandler> logger) : IQueryHandler<CrawlCaldeiraEventsQuery, CaldeiraEventsResponse>
 {
