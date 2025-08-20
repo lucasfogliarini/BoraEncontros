@@ -1,7 +1,10 @@
-﻿name: Build and Deploy boraencontros-workers to Azure Container App
+﻿name: Deploy boraencontros-workers to Azure Function App
 
 on:
   workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '9.x'
 
 jobs:
   build-and-deploy:
@@ -15,13 +18,18 @@ jobs:
     - name: Checkout to the branch
       uses: actions/checkout@v4
 
-    - name: Login to Azure
-      uses: azure/login@v1
+    - name: Set up .NET Core ${{ env.DOTNET_VERSION }}
+      uses: actions/setup-dotnet@v4
       with:
-        creds: ${{ secrets.AZURE_BORA_CREDS }}
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: dotnet publish
+    - name: dotnet publish (restore, build e publish)
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/boraencontros-workers
+
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_BORA_CREDS }}    
 
     - name: Deploy boraencontros-workers to Azure Function App (boraencontros-workers)
       uses: Azure/functions-action@v1
