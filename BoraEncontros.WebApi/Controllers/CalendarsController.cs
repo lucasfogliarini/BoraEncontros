@@ -28,7 +28,7 @@ namespace BoraEncontros.WebApi.Controllers
         public async Task<IActionResult> GetEventsAsync(string username, [FromQuery] EventRequestFilter eventsFilterQuery, [FromBody] EventRequestFilter? eventsFilterBody = null, CancellationToken cancellationToken = default)
         {
             var eventsFilter = eventsFilterBody ?? eventsFilterQuery;
-            var result = await queryHandler.Handle(new GetEventsQuery(username, eventsFilter), cancellationToken);
+            var result = await queryHandler.HandleAsync(new GetEventsQuery(username, eventsFilter), cancellationToken);
             if (result.IsFailure)
                 return NotFound(result.Error);
 

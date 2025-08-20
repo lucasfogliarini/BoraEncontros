@@ -9,7 +9,7 @@ internal sealed class EventsEndpoint : IEndpoint
                                               IQueryHandler<GetEventsQuery, GetEventsResponse> queryHandler,
                                                CancellationToken cancellationToken = default)
     {
-        var result = await queryHandler.Handle(new GetEventsQuery(username), cancellationToken);
+        var result = await queryHandler.HandleAsync(new GetEventsQuery(username), cancellationToken);
         if (result.IsFailure)
             return Results.NotFound(result.Error);
 

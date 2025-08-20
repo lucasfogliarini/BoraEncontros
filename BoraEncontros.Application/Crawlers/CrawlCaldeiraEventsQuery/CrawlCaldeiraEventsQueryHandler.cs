@@ -1,12 +1,12 @@
-﻿using BoraEncontros.Application.Crawlers;
+﻿using BoraEncontros.Events;
 using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
 
-namespace BoraEncontros.Application.Calendars;
+namespace BoraEncontros.Application.Crawlers;
 
 public class CrawlCaldeiraEventsQueryHandler(ILogger<CrawlCaldeiraEventsQueryHandler> logger) : IQueryHandler<CrawlCaldeiraEventsQuery, CaldeiraEventsResponse>
 {
-    public async Task<Result<CaldeiraEventsResponse>> Handle(CrawlCaldeiraEventsQuery query, CancellationToken cancellationToken = default)
+    public async Task<Result<CaldeiraEventsResponse>> HandleAsync(CrawlCaldeiraEventsQuery query, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -20,7 +20,7 @@ public class CrawlCaldeiraEventsQueryHandler(ILogger<CrawlCaldeiraEventsQueryHan
 
             logger.LogInformation($"{eventsCrawled.Count()} eventos encontrados.");
 
-            var integrationEvents = eventsCrawled.Select(e => new EventCreatedIntegrationEvent
+            var events = eventsCrawled.Select(e => new Event
             {
                 CalendarEmail = "lucasfogliarini@gmail.com",
                 Title = e.Title,
@@ -32,7 +32,7 @@ public class CrawlCaldeiraEventsQueryHandler(ILogger<CrawlCaldeiraEventsQueryHan
                 Public = true
             });
 
-            return Result.Success(new CaldeiraEventsResponse(integrationEvents));
+            return Result.Success(new CaldeiraEventsResponse(events));
         }
         catch (Exception ex)
         {
@@ -44,4 +44,4 @@ public class CrawlCaldeiraEventsQueryHandler(ILogger<CrawlCaldeiraEventsQueryHan
 
 public record CrawlCaldeiraEventsQuery(string EventQuery, DateTime StartDate, DateTime EndDate) : IQuery<CaldeiraEventsResponse>;
 
-public record CaldeiraEventsResponse(IEnumerable<EventCreatedIntegrationEvent> Events);
+public record CaldeiraEventsResponse(IEnumerable<Event> Events);

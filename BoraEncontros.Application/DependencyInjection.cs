@@ -22,8 +22,7 @@ public static class DependencyInjection
             typeof(ICommandHandler<>),
             typeof(ICommandHandler<,>),
             typeof(IQueryHandler<,>),
-            typeof(IDomainEventHandler<>),
-            typeof(IIntegrationEventHandler<>)
+            typeof(IDomainEventHandler<>)
         };
 
         var types = assembly.GetTypes();
