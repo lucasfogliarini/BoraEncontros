@@ -20,7 +20,6 @@ public class EventRequest
             Summary = eventRequest.Title,
             Description = eventRequest.Description,
             Location = eventRequest.Location,
-            ETag = eventRequest.EventLink,
             Start = new EventDateTime
             {
                 DateTimeDateTimeOffset = eventRequest.Start,

@@ -25,9 +25,9 @@ public class EventCreatedIntegrationEventHandler(ICalendarService calendarServic
             Public = integrationEvent.Public,
         };
 
-        await calendarService.CreateAsync(integrationEvent.CalendarEmail, eventRequest, cancellationToken);
-
-        logger.LogInformation("Evento '{Title}' criado com sucesso na agenda {Agenda}", integrationEvent.Title, integrationEvent.CalendarEmail);
+        var calendarEventCreated = await calendarService.CreateAsync(integrationEvent.CalendarEmail, eventRequest, cancellationToken);
+        if(calendarEventCreated != null)
+            logger.LogInformation("Evento '{Title}' criado com sucesso na agenda {Agenda}", integrationEvent.Title, integrationEvent.CalendarEmail);
     }
 }
 
