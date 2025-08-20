@@ -2,7 +2,7 @@ using BoraEncontros.Application;
 using BoraEncontros.Application.Calendars;
 using Microsoft.Azure.Functions.Worker;
 
-namespace BoraEncontros.Workers;
+namespace BoraEncontros.Workers.Consumers;
 
 public class EventCreatedConsumer(IIntegrationEventHandler<EventCreatedIntegrationEvent> integrationEventHandler)
 {

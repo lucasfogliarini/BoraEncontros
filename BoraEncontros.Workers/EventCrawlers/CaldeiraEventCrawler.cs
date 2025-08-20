@@ -2,13 +2,13 @@
 using BoraEncontros.Application.Calendars;
 using Microsoft.Azure.Functions.Worker;
 
-namespace BoraEncontros.Workers.EventsJobs;
+namespace BoraEncontros.Workers.EventCrawlers;
 
-public class CaldeiraEventsJob(IQueryHandler<CrawlCaldeiraEventsQuery, CaldeiraEventsResponse> queryHandler)
+public class CaldeiraEventCrawler(IQueryHandler<CrawlCaldeiraEventsQuery, CaldeiraEventsResponse> queryHandler)
 {
     const string EVENTS_QUERY = "/agenda/";
 
-    [Function(nameof(CaldeiraEventsJob))]
+    [Function(nameof(CaldeiraEventCrawler))]
     [ServiceBusOutput("event-created", Connection = "AzureServiceBusConnectionString")]
     public async Task<IEnumerable<EventCreatedIntegrationEvent>> RunAsync([TimerTrigger("%CrawlerCron%", RunOnStartup = true)] TimerInfo timer)
     {
