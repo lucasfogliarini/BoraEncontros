@@ -5,7 +5,7 @@ using Google.Apis.Util.Store;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 
-namespace BoraEncontros.Infraestructure.DataStores;
+namespace BoraEncontros.Infrastructure.DataStores;
 
 internal class CalendarTokenDataStore(ICalendarTokenRepository calendarTokenRepository) : IDataStore
 {

@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BoraEncontros.Application\BoraEncontros.Application.csproj" />
-    <ProjectReference Include="..\BoraEncontros.Infraestructure\BoraEncontros.Infraestructure.csproj" />
+    <ProjectReference Include="..\BoraEncontros.Infrastructure\BoraEncontros.Infrastructure.csproj" />
     <ProjectReference Include="..\BoraEncontros\BoraEncontros.csproj" />
   </ItemGroup>
 

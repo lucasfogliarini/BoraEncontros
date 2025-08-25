@@ -1,6 +1,6 @@
 ﻿using BoraEncontros.Accounts.Repositories;
-using BoraEncontros.Infraestructure;
-using BoraEncontros.Infraestructure.DataStores;
+using BoraEncontros.Infrastructure;
+using BoraEncontros.Infrastructure.DataStores;
 using BoraEncontros.Infrastructure;
 using Google.Apis.Util.Store;
 using Microsoft.EntityFrameworkCore;

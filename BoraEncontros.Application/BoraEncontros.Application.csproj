@@ -12,7 +12,7 @@
     </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BoraEncontros.Infraestructure\BoraEncontros.Infraestructure.csproj" />
+    <ProjectReference Include="..\BoraEncontros.Infrastructure\BoraEncontros.Infrastructure.csproj" />
     <ProjectReference Include="..\BoraEncontros\BoraEncontros.csproj" />
   </ItemGroup>
 

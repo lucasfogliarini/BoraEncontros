@@ -4,16 +4,19 @@ using BoraEncontros.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BoraEncontros.Infraestructure.Migrations
+namespace BoraEncontros.Infrastructure.Migrations
 {
     [DbContext(typeof(BoraEncontrosDbContext))]
-    partial class BoraEncontrosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250806145022_InitBoraEncontros")]
+    partial class InitBoraEncontros
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

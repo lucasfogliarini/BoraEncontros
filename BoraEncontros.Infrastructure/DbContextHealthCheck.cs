@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace BoraEncontros.Infraestructure;
+namespace BoraEncontros.Infrastructure;
 
 public class DbContextHealthCheck<TDbContext>(TDbContext dbContext) : IHealthCheck where TDbContext : DbContext
 {

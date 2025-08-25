@@ -1,6 +1,6 @@
 ﻿using BoraEncontros.Accounts;
 using BoraEncontros.Accounts.Repositories;
-using BoraEncontros.Infraestructure.Repositories;
+using BoraEncontros.Infrastructure.Repositories;
 using BoraEncontros.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 

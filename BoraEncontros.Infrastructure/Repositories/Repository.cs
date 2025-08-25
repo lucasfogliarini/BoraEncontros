@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace BoraEncontros.Infraestructure.Repositories
+namespace BoraEncontros.Infrastructure.Repositories
 {
     internal abstract class Repository(BoraEncontrosDbContext dbContext) : IRepository
     {

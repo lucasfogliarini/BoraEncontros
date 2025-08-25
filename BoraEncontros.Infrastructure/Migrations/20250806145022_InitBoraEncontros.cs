@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BoraEncontros.Infraestructure.Migrations
+namespace BoraEncontros.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitBoraEncontros : Migration
