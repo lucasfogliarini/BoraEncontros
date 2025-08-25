@@ -13,21 +13,16 @@ internal class CalendarTokenDataStore(ICalendarTokenRepository calendarTokenRepo
         if (response is not TokenResponse tokenResponse)
             throw new ArgumentException("Invalid token response type.", nameof(response));
 
-        var calendarToken = await calendarTokenRepository.GetAsync(email);
-        if (calendarToken?.UpdatedAt.Date == DateTime.Today)
+        var calendarToken = await calendarTokenRepository.GetAsync(email);        
+        if (calendarToken == null)
         {
-            return;
-        }
-        var expiration = DateTime.Now.AddSeconds((double)tokenResponse.ExpiresInSeconds);
-        if(calendarToken == null)
-        {
-            calendarToken ??= CalendarToken.Create(email, "Google", expiration);
-            calendarToken.CreatedNow();
+            calendarToken ??= CalendarToken.Create(email, "Google");
             calendarTokenRepository.Add(calendarToken);
         }
         calendarToken.UpdatedNow();
         calendarToken.AccessToken = tokenResponse.AccessToken;
         calendarToken.RefreshToken = tokenResponse.RefreshToken ?? calendarToken.RefreshToken;
+        calendarToken.Expiration = DateTime.Now.AddDays(1);
         await calendarTokenRepository.CommitScope.CommitAsync();
     }
 
@@ -37,11 +32,15 @@ internal class CalendarTokenDataStore(ICalendarTokenRepository calendarTokenRepo
         if (calendarToken == null)
             throw new ValidationException("Calendário não autorizado.");
 
+        var issuedUtc = calendarToken.UpdatedAt;
+        long expiresIn = (long)(calendarToken.Expiration - issuedUtc).TotalSeconds;
+
         var tokenResponse = new TokenResponse
         {
+            IssuedUtc = issuedUtc,
             AccessToken = calendarToken.AccessToken,
             RefreshToken = calendarToken.RefreshToken,
-            ExpiresInSeconds = (int)(calendarToken.Expiration - DateTime.UtcNow).TotalSeconds
+            ExpiresInSeconds = expiresIn
         };
 
         return (TResponse)(object)tokenResponse;

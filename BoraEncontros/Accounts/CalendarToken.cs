@@ -9,9 +9,9 @@ public class CalendarToken : AggregateRoot
     public string? Provider { get; set; }
     public string? AccessToken { get; set; }
     public string? RefreshToken { get; set; }
-    public DateTime Expiration { get; set; }
+    public DateTimeOffset Expiration { get; set; }
 
-    public static CalendarToken Create(string email, string provider, DateTime expiration)
+    public static CalendarToken Create(string email, string provider)
     {
         var account = new Account
         {
@@ -23,7 +23,6 @@ public class CalendarToken : AggregateRoot
         {
             Account = account,
             Provider = provider,
-            Expiration = expiration
         };
         calendarToken.CreatedNow();
         return calendarToken;
