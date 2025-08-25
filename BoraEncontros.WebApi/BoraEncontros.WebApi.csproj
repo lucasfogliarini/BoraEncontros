@@ -10,6 +10,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
 	<PackageReference Include="Google.Apis.Auth.AspNetCore3" Version="1.70.0" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.8">
+		<PrivateAssets>all</PrivateAssets>
+	</PackageReference>
   </ItemGroup>
 
   <ItemGroup>
