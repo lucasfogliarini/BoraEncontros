@@ -3,7 +3,6 @@ using BoraEncontros.Accounts.Repositories;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Util.Store;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
 
 namespace BoraEncontros.Infrastructure.DataStores;
 
@@ -20,7 +19,13 @@ internal class CalendarTokenDataStore(ICalendarTokenRepository calendarTokenRepo
             return;
         }
         var expiration = DateTime.Now.AddSeconds((double)tokenResponse.ExpiresInSeconds);
-        calendarToken ??= CalendarToken.Create(email, "Google", expiration);
+        if(calendarToken == null)
+        {
+            calendarToken ??= CalendarToken.Create(email, "Google", expiration);
+            calendarToken.CreatedNow();
+            calendarTokenRepository.Add(calendarToken);
+        }
+        calendarToken.UpdatedNow();
         calendarToken.AccessToken = tokenResponse.AccessToken;
         calendarToken.RefreshToken = tokenResponse.RefreshToken ?? calendarToken.RefreshToken;
         await calendarTokenRepository.CommitScope.CommitAsync();
