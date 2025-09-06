@@ -36,4 +36,17 @@ jobs:
           #KC_DB_USERNAME=${{ secrets.PG_USER }}
           #KC_DB_PASSWORD=${{ secrets.PG_PASSWORD }}
           #KC_HOSTNAME=${{ secrets.KEYCLOAK_HOSTNAME }}
-        startupCommand: '["start"]'
+        startupCommand: |
+          ["start"]
+
+    - name: Apply scale and resource limits
+      run: |
+        az containerapp update \
+          --name keycloak \
+          --resource-group rg-bora \
+          --min-replicas 0 \
+          --max-replicas 2 \
+          --cpu 0.5 \
+          --memory "1Gi"
+
+        

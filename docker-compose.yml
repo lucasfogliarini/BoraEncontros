@@ -7,7 +7,7 @@ services:
       dockerfile: BoraEncontros.WebApi/Dockerfile
     container_name: BoraEncontros.WebApi
     ports:
-      - "1000:8080"  # HTTP
+      - "2001:8080"  # HTTP
     env_file: .env
 
 
@@ -17,5 +17,5 @@ services:
       dockerfile: BoraEncontros.Workers/Dockerfile
     container_name: BoraEncontros.Workers
     ports:
-      - "1001:8080"
+      - "3001:8080"
     env_file: .env
