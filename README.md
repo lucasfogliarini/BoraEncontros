@@ -1,5 +1,3 @@
-[![Deploy Bora Encontros to Azure Web App](https://github.com/lucasfogliarini/boraencontros/actions/workflows/deploy-api.yml/badge.svg)](https://github.com/lucasfogliarini/boraencontros/actions/workflows/deploy-api.yml)
-
 # Bora Encontros
 
 O **Bora** é um movimento criado para promover conexões verdadeiras entre pessoas através de grupos e encontros com propósito.
